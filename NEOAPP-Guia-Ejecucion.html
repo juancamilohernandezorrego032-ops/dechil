@@ -1,0 +1,1070 @@
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guía completa de ejecución de NEOAPP - Backend Spring Boot + Frontend React (Vite)">
+    <meta name="author" content="NEOAPP Development Team">
+    <title>NEOAPP - Guía Completa de Ejecución</title>
+    <style>
+        @media print {
+            * {
+                background: transparent !important;
+                color: black !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+            }
+            nav, .copy-indicator, footer {
+                display: none !important;
+            }
+            .container {
+                box-shadow: none !important;
+                width: 100%;
+            }
+            .content {
+                padding: 0 !important;
+            }
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            page-break-after: always;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #f8f9fa;
+            padding: 0;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            flex: 1;
+            padding: 15px;
+            text-decoration: none;
+            color: #667eea;
+            font-weight: bold;
+            text-align: center;
+            border-right: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        nav a.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .step h4 {
+            margin: 10px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .code-block button:hover {
+            background: #764ba2;
+        }
+
+        .requirement {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #0288d1;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .requirement::before {
+            content: "✓";
+            background: #0288d1;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .warning {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+
+        .warning::before {
+            content: "⚠️ ";
+            font-weight: bold;
+        }
+
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+
+        .success::before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 3px;
+        }
+
+        .info::before {
+            content: "ℹ️ ";
+            font-weight: bold;
+        }
+
+        .url-box {
+            background: #f5f5f5;
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #667eea;
+            word-break: break-all;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .diagram {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            border: 2px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .comparison-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            nav a {
+                min-width: 120px;
+                padding: 12px;
+                font-size: 0.9em;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        footer {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        .copy-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .copy-indicator.show {
+            display: block;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .download-btn {
+            background: white;
+            color: #667eea;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .print-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .print-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media print {
+            .download-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ NEOAPP</h1>
+            <p>Guía Completa de Ejecución - Backend Spring Boot + Frontend React (Vite)</p>
+        </header>
+
+        <div class="download-section">
+            <button class="download-btn" onclick="descargarHTML()">📥 Descargar HTML</button>
+            <button class="download-btn print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+            <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.9;">Comparte esta guía fácilmente por correo</p>
+        </div>
+
+        <nav>
+            <a class="nav-link active" onclick="mostrarSeccion('inicio')">Inicio</a>
+            <a class="nav-link" onclick="mostrarSeccion('requisitos')">Requisitos</a>
+            <a class="nav-link" onclick="mostrarSeccion('backend')">Backend</a>
+            <a class="nav-link" onclick="mostrarSeccion('frontend')">Frontend</a>
+            <a class="nav-link" onclick="mostrarSeccion('thunder')">Thunder Client</a>
+            <a class="nav-link" onclick="mostrarSeccion('problemas')">Problemas</a>
+        </nav>
+
+        <div class="content">
+            <!-- SECCIÓN: INICIO -->
+            <section id="inicio" class="section active">
+                <h2>📚 Bienvenido a NEOAPP</h2>
+                
+                <p style="font-size: 1.1em; margin: 20px 0;">Este proyecto es una <strong>aplicación fullstack moderna</strong> que combina:</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                        <h3 style="color: white; border: none; padding: 0; margin-bottom: 10px;">Backend</h3>
+                        <p style="font-size: 1.2em; margin: 10px 0;">Spring Boot</p>
+                        <p style="opacity: 0.9;">Java 17+</p>
+                        <p style="opacity: 0.9;">Base de datos H2</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                        <h3 style="color: white; border: none; padding: 0; margin-bottom: 10px;">Frontend</h3>
+                        <p style="font-size: 1.2em; margin: 10px 0;">React + Vite</p>
+                        <p style="opacity: 0.9;">Node.js 18+</p>
+                        <p style="opacity: 0.9;">Interfaz moderna</p>
+                    </div>
+                </div>
+
+                <h3>¿Qué es cada parte?</h3>
+                <div class="step">
+                    <h4><span class="step-number">1</span> Backend (Spring Boot)</h4>
+                    <p>El servidor que proporciona las APIs REST. Maneja la lógica de negocio, valida datos y gestiona la base de datos.</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">2</span> Frontend (React + Vite)</h4>
+                    <p>La interfaz de usuario. Se conecta al backend para enviar y recibir datos. Vite es un empaquetador muy rápido.</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">3</span> Thunder Client</h4>
+                    <p>Una herramienta de pruebas (como Postman) integrada en VS Code para probar las APIs sin necesidad del frontend.</p>
+                </div>
+
+                <div class="info">
+                    Esta guía te llevará paso a paso para ejecutar ambas partes, probar la API y resolver problemas comunes.
+                </div>
+            </section>
+
+            <!-- SECCIÓN: REQUISITOS -->
+            <section id="requisitos" class="section">
+                <h2>✅ Requisitos Previos</h2>
+                
+                <p style="font-size: 1.05em; margin: 20px 0;">Antes de empezar, asegúrate de tener instalado lo siguiente:</p>
+
+                <h3>1. Java 17 o Superior</h3>
+                <div class="requirement">
+                    <p><strong>Necesario para el backend</strong>. Spring Boot requiere Java 17 como mínimo.</p>
+                </div>
+
+                <h4>🔍 Verificar si está instalado:</h4>
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>java -version</pre>
+                </div>
+
+                <h4>📥 Si no está instalado:</h4>
+                <p>Descarga desde: <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" style="color: #667eea; text-decoration: none;">https://www.oracle.com/java/technologies/downloads/</a></p>
+                <p style="margin-top: 10px; font-size: 0.95em;">O usa un gestor de versiones como <code>sdkman</code> o <code>jenv</code></p>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>2. Node.js (Versión 18 o Superior)</h3>
+                <div class="requirement">
+                    <p><strong>Necesario para el frontend</strong>. Incluye npm, el gestor de paquetes de JavaScript.</p>
+                </div>
+
+                <h4>🔍 Verificar si está instalado:</h4>
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>node --version
+npm --version</pre>
+                </div>
+
+                <h4>📥 Si no está instalado:</h4>
+                <p>Descarga desde: <a href="https://nodejs.org/" target="_blank" style="color: #667eea; text-decoration: none;">https://nodejs.org/</a></p>
+                <p style="margin-top: 10px; font-size: 0.95em;">Se recomienda descargar la versión LTS (Long Term Support)</p>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>3. Git (Opcional pero Recomendado)</h3>
+                <div class="requirement">
+                    <p><strong>Para clonar y versionear el proyecto</strong>.</p>
+                </div>
+
+                <div class="success">
+                    Una vez verificado todo, estás listo para pasar a la siguiente sección. ¡Vamos! ⚡
+                </div>
+            </section>
+
+            <!-- SECCIÓN: BACKEND -->
+            <section id="backend" class="section">
+                <h2>🖥️ Ejecutar el Backend (Spring Boot)</h2>
+
+                <div class="info">
+                    El backend es el servidor que proporciona todas las APIs REST para que el frontend y Thunder Client se conecten.
+                </div>
+
+                <h3>Paso 1: Navegar a la Carpeta del Backend</h3>
+                <p>Abre una terminal (PowerShell, CMD, Terminal de macOS o bash en Linux) y navega hasta la carpeta del backend:</p>
+
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>cd neoapp1-develop-main/NEOAPP</pre>
+                </div>
+
+                <div class="warning">
+                    Si estás en Windows con PowerShell, asegúrate de que el script de ejecución tenga permisos. Si te aparece un error, prueba con CMD en lugar de PowerShell.
+                </div>
+
+                <h3>Paso 2: Ejecutar el Backend</h3>
+                <p>Usa Maven para compilar y ejecutar la aplicación. El comando depende de tu sistema operativo:</p>
+
+                <div class="comparison">
+                    <div class="comparison-box">
+                        <h4>🪟 Windows (PowerShell / CMD)</h4>
+                        <div class="code-block">
+                            <button onclick="copiarCodigo(this)">Copiar</button>
+                            <pre>./mvnw.cmd spring-boot:run</pre>
+                        </div>
+                    </div>
+                    <div class="comparison-box">
+                        <h4>🍎 macOS / 🐧 Linux</h4>
+                        <div class="code-block">
+                            <button onclick="copiarCodigo(this)">Copiar</button>
+                            <pre>./mvnw spring-boot:run</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Paso 3: Esperar a que se Compile</h3>
+                <p>Maven descargará todas las dependencias y compilará el proyecto. Esto puede tomar varios minutos la primera vez. Verás algo como:</p>
+
+                <div class="code-block">
+                    <pre>[INFO] Scanning for projects...
+[INFO] BUILD SUCCESS
+[INFO] Started Application in X.XXX seconds</pre>
+                </div>
+
+                <h3>✅ Backend Ejecutándose</h3>
+                <p>Una vez que veas el mensaje "Started", el backend está listo. Accede a:</p>
+
+                <div class="url-box">
+                    📍 API Principal: http://localhost:8080/neoappapi/v1
+                </div>
+
+                <div class="url-box">
+                    📍 Consola H2: http://localhost:8080/h2-console
+                </div>
+
+                <h4>Credenciales para la Consola H2:</h4>
+                <table>
+                    <tbody><tr>
+                        <th>Campo</th>
+                        <th>Valor</th>
+                    </tr>
+                    <tr>
+                        <td>JDBC URL</td>
+                        <td><code>jdbc:h2:mem:neoapp_bd</code></td>
+                    </tr>
+                    <tr>
+                        <td>Usuario</td>
+                        <td><code>sa</code></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña</td>
+                        <td>(dejar vacío)</td>
+                    </tr>
+                </tbody></table>
+
+                <div class="success">
+                    ¡El backend está corriendo! Ahora puedes ejecutar el frontend o probar la API con Thunder Client.
+                </div>
+
+                <h3>🛑 Detener el Backend</h3>
+                <p>En la terminal, presiona <code>Ctrl + C</code></p>
+            </section>
+
+            <!-- SECCIÓN: FRONTEND -->
+            <section id="frontend" class="section">
+                <h2>⚛️ Ejecutar el Frontend (React + Vite)</h2>
+
+                <div class="info">
+                    El frontend es la interfaz de usuario. Se conectará automáticamente al backend que ejecutaste en la sección anterior.
+                </div>
+
+                <h3>Paso 1: Navegar a la Carpeta del Frontend</h3>
+                <p>Abre una <strong>NUEVA terminal</strong> (sin cerrar la anterior donde corre el backend) y navega:</p>
+
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>cd neoapp1-develop-main/NEOAPP/frontend</pre>
+                </div>
+
+                <div class="warning">
+                    Es importante abrir una nueva terminal. Si cierras la anterior, detendrás el backend.
+                </div>
+
+                <h3>Paso 2: Instalar Dependencias</h3>
+                <p>npm descargará todos los paquetes necesarios (React, Vite, etc.):</p>
+
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>npm install</pre>
+                </div>
+
+                <div class="info">
+                    Esto solo es necesario la primera vez. Las siguientes veces puedes saltar directo al "Paso 3".
+                </div>
+
+                <h3>Paso 3: Iniciar el Servidor de Desarrollo</h3>
+                <p>Vite compilará React y levantará un servidor de desarrollo muy rápido:</p>
+
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>npm run dev</pre>
+                </div>
+
+                <h3>✅ Frontend Ejecutándose</h3>
+                <p>Verás algo como:</p>
+
+                <div class="code-block">
+                    <pre>  VITE v5.x.x  ready in 123 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  press h + enter to show help</pre>
+                </div>
+
+                <div class="url-box">
+                    📍 Frontend: http://localhost:5173/
+                </div>
+
+                <div class="success">
+                    ¡Abre tu navegador en esa URL! El frontend se conectará automáticamente al backend.
+                </div>
+
+                <h3>🛑 Detener el Frontend</h3>
+                <p>En la terminal, presiona <code>Ctrl + C</code></p>
+
+                <h3>📊 Estado de Ejecución</h3>
+                <div class="diagram">
+Terminal 1 (Backend):              Terminal 2 (Frontend):
+Backend Spring Boot ✓              Frontend React + Vite ✓
+http://localhost:8080              http://localhost:5173
+                </div>
+
+                <p style="text-align: center; margin-top: 20px;">Ambas terminales deben estar activas simultáneamente</p>
+            </section>
+
+            <!-- SECCIÓN: THUNDER CLIENT -->
+            <section id="thunder" class="section">
+                <h2>⚡ Importar Colección en Thunder Client</h2>
+
+                <div class="info">
+                    Thunder Client es una extensión de VS Code que permite probar APIs sin necesidad del frontend. Es como Postman, pero integrado en VS Code.
+                </div>
+
+                <h3>Paso 1: Instalar Thunder Client</h3>
+                <p>Si aún no lo has hecho, instala la extensión en VS Code:</p>
+                <ol style="margin: 15px 0; padding-left: 20px;">
+                    <li>Abre VS Code</li>
+                    <li>Ve a Extensiones (<code>Ctrl + Shift + X</code>)</li>
+                    <li>Busca "Thunder Client"</li>
+                    <li>Haz clic en "Instalar"</li>
+                </ol>
+
+                <h3>Paso 2: Abrir el Panel de Thunder Client</h3>
+                <p>En la barra lateral izquierda de VS Code, haz clic en el ícono de Thunder Client (parece un rayo):</p>
+
+                <div class="diagram">
+VS Code Sidebar
+├── Explorer
+├── Search
+├── Source Control
+├── Run and Debug
+├── Extensions
+└── ⚡ Thunder Client ← Click aquí
+                </div>
+
+                <h3>Paso 3: Importar la Colección</h3>
+                <p>Sigue estos pasos dentro de Thunder Client:</p>
+
+                <div class="step">
+                    <h4><span class="step-number">1</span> Haz clic en la pestaña "Collections"</h4>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">2</span> Abre el menú (icono de 3 puntos <strong>...</strong>)</h4>
+                    <p>Busca la opción de menú en la esquina superior derecha del panel de Thunder Client</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">3</span> Selecciona "Import"</h4>
+                    <p>Aparecerá un diálogo para seleccionar el archivo a importar</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">4</span> Ubica el archivo de colección</h4>
+                    <p>Navega a: <code>thunder-tests/thunder-collection_neoapp.json</code></p>
+                    <p style="margin-top: 10px; font-size: 0.95em;">Este archivo se encuentra en la raíz del proyecto</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">5</span> Confirma la importación</h4>
+                    <p>La colección "NEOAPP API" aparecerá en tu lista de colecciones</p>
+                </div>
+
+                <h3>✅ Colección Importada</h3>
+                <p>Ahora verás todas las pruebas disponibles organizadas:</p>
+
+                <div class="diagram">
+Collections
+└── NEOAPP API
+    ├── Autenticación
+    ├── Usuarios
+    ├── Productos
+    └── Más endpoints...
+                </div>
+
+                <h3>🧪 Pruebas Disponibles</h3>
+
+                <h4>📝 Crear Usuario (Dato Dinámico)</h4>
+                <p>Esta solicitud genera datos aleatorios cada vez que la envías:</p>
+                <div class="code-block">
+                    <pre>{
+  "documento": "{{#random_number}}",
+  "correo": "usuario-{{#random_number}}@neoapp.com",
+  "nombre": "Usuario Prueba",
+  "password": "password123"
+}</pre>
+                </div>
+                <div class="success">
+                    Usa esta para crear múltiples usuarios sin errores de duplicidad. Los datos se regeneran automáticamente cada envío.
+                </div>
+
+                <h4>❌ Crear Usuario (Dato Fijo - Para Probar Error)</h4>
+                <p>Esta solicitud usa datos fijos (siempre los mismos):</p>
+                <div class="code-block">
+                    <pre>{
+  "documento": "1234567890",
+  "correo": "admin@neoapp.com",
+  "nombre": "Administrador",
+  "password": "admin123"
+}</pre>
+                </div>
+                <div class="warning">
+                    La primera vez funcionará. La segunda vez generará un error 400 Bad Request (violación de clave única). Esto es intencional para validar la respuesta de error.
+                </div>
+
+                <h3>🚀 Enviar una Solicitud</h3>
+                <ol style="margin: 15px 0; padding-left: 20px;">
+                    <li>Selecciona una solicitud de la colección</li>
+                    <li>Haz clic en el botón "Send" (o presiona <code>Ctrl + Enter</code>)</li>
+                    <li>Verás la respuesta en el panel derecho</li>
+                </ol>
+
+                <div class="success">
+                    ¡Listo! Ahora puedes probar todos los endpoints de la API sin necesidad de usar el frontend.
+                </div>
+            </section>
+
+            <!-- SECCIÓN: PROBLEMAS -->
+            <section id="problemas" class="section">
+                <h2>🔧 Solución de Problemas Comunes</h2>
+
+                <h3>❌ Error: "Port 8080 was already in use"</h3>
+                <p>Significa que otro proceso está usando el puerto 8080 del backend.</p>
+
+                <h4>Solución Rápida (Windows PowerShell):</h4>
+                <p>Ejecuta esta única línea para terminar el proceso:</p>
+
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force</pre>
+                </div>
+
+                <h4>Solución Alternativa: Cambiar el Puerto</h4>
+                <p>Si prefieres que la aplicación corra en otro puerto permanentemente (ej: 8081):</p>
+
+                <div class="step">
+                    <h4><span class="step-number">1</span> Abre el archivo de configuración</h4>
+                    <p><code>neoapp1-develop-main/NEOAPP/src/main/resources/application.properties</code></p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">2</span> Agrega esta línea al final:</h4>
+                    <div class="code-block">
+                        <button onclick="copiarCodigo(this)">Copiar</button>
+                        <pre>server.port=8081</pre>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">3</span> Guarda el archivo</h4>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">4</span> Reinicia el backend</h4>
+                    <p>Detén (Ctrl + C) y vuelve a ejecutar con <code>./mvnw.cmd spring-boot:run</code></p>
+                </div>
+
+                <div class="warning">
+                    Si cambias el puerto a 8081, recuerda actualizar:
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>La URL base en Thunder Client: <code>http://localhost:8081</code></li>
+                        <li>La URL en el frontend (si está configurada manualmente)</li>
+                    </ul>
+                </div>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>❌ Error: "npm: command not found"</h3>
+                <p>Node.js no está instalado o no está en el PATH del sistema.</p>
+
+                <h4>Solución:</h4>
+                <ol style="margin: 15px 0; padding-left: 20px;">
+                    <li>Verifica que Node.js esté instalado: <code>node --version</code></li>
+                    <li>Si no aparece, descárgalo desde <a href="https://nodejs.org/" target="_blank" style="color: #667eea;">https://nodejs.org/</a></li>
+                    <li>Reinicia tu terminal después de la instalación</li>
+                </ol>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>❌ Error: "java: command not found"</h3>
+                <p>Java no está instalado o no está en el PATH del sistema.</p>
+
+                <h4>Solución:</h4>
+                <ol style="margin: 15px 0; padding-left: 20px;">
+                    <li>Verifica que Java esté instalado: <code>java -version</code></li>
+                    <li>Si no aparece, descárgalo desde <a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" style="color: #667eea;">https://www.oracle.com/java/technologies/downloads/</a></li>
+                    <li>Reinicia tu terminal después de la instalación</li>
+                </ol>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>❌ Error: "BUILD FAILURE" en Maven</h3>
+                <p>Puede deberse a problemas de dependencias o configuración.</p>
+
+                <h4>Soluciones a Intentar:</h4>
+                <ol style="margin: 15px 0; padding-left: 20px;">
+                    <li>Limpia el caché de Maven:
+                        <div class="code-block" style="margin-top: 10px;">
+                            <button onclick="copiarCodigo(this)">Copiar</button>
+                            <pre>./mvnw clean</pre>
+                        </div>
+                    </li>
+                    <li>Intenta nuevamente:
+                        <div class="code-block" style="margin-top: 10px;">
+                            <button onclick="copiarCodigo(this)">Copiar</button>
+                            <pre>./mvnw spring-boot:run</pre>
+                        </div>
+                    </li>
+                    <li>Si persiste, verifica la consola para más detalles del error</li>
+                </ol>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>❌ El Frontend no se Conecta al Backend</h3>
+                <p>El frontend envía solicitudes HTTP al backend, pero no obtiene respuesta.</p>
+
+                <h4>Verificaciones:</h4>
+                <div class="step">
+                    <h4><span class="step-number">1</span> Asegúrate de que el backend está corriendo</h4>
+                    <p>Abre en tu navegador: <code>http://localhost:8080/neoappapi/v1</code></p>
+                    <p style="margin-top: 10px;">Deberías ver una respuesta (no un error de conexión)</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">2</span> Verifica la consola del navegador</h4>
+                    <p>Presiona <code>F12</code> → pestaña "Console" → busca errores de CORS o conexión</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">3</span> Recarga la página del frontend</h4>
+                    <p>Presiona <code>Ctrl + Shift + R</code> (recarga completa)</p>
+                </div>
+
+                <div class="step">
+                    <h4><span class="step-number">4</span> Si cambió el puerto del backend</h4>
+                    <p>Actualiza la configuración en el frontend para que apunte al puerto correcto</p>
+                </div>
+
+                <hr style="margin: 30px 0; border: none; border-top: 2px solid #ddd;">
+
+                <h3>❌ "Port 5173 was already in use" (Frontend)</h3>
+                <p>El puerto del frontend ya está ocupado.</p>
+
+                <h4>Solución en Windows (PowerShell):</h4>
+                <div class="code-block">
+                    <button onclick="copiarCodigo(this)">Copiar</button>
+                    <pre>Stop-Process -Id (Get-NetTCPConnection -LocalPort 5173).OwningProcess -Force</pre>
+                </div>
+
+                <h4>Solución Alternativa: Cambiar Puerto</h4>
+                <p>Edita <code>vite.config.js</code> en la carpeta del frontend:</p>
+                <div class="code-block">
+                    <pre>export default {
+  server: {
+    port: 5174
+  }
+}</pre>
+                </div>
+
+                <div class="success">
+                    ¿Aún tienes problemas? Revisa la consola para mensajes de error específicos. Usualmente ahí encontrarás la raíz del problema.
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>📖 Guía Oficial de NEOAPP | Versión 1.0</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Desarrollado para facilitar la ejecución del proyecto</p>
+            <p style="font-size: 0.85em; margin-top: 15px; opacity: 0.8;">
+                💌 Contacto: <a href="mailto:jeronimoescobargallego@gmail.com" style="color: #667eea; text-decoration: none;">jeronimoescobargallego@gmail.com</a>
+            </p>
+            <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.7;">Última actualización: Mayo 2026</p>
+        </footer>
+    </div>
+
+    <div class="copy-indicator" id="copyIndicator">✓ Copiado al portapapeles</div>
+
+    <script>
+        function mostrarSeccion(nombreSeccion) {
+            // Ocultar todas las secciones
+            const secciones = document.querySelectorAll('.section');
+            secciones.forEach(seccion => {
+                seccion.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            const seccion = document.getElementById(nombreSeccion);
+            if (seccion) {
+                seccion.classList.add('active');
+            }
+
+            // Actualizar navegación activa
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Scroll al inicio
+            window.scrollTo(0, 0);
+        }
+
+        function copiarCodigo(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.innerText.replace('Copiar', '').trim();
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const indicator = document.getElementById('copyIndicator');
+                indicator.classList.add('show');
+                
+                setTimeout(() => {
+                    indicator.classList.remove('show');
+                }, 2000);
+                
+                // Cambiar el texto del botón temporalmente
+                const originalText = button.innerText;
+                button.innerText = '✓ Copiado';
+                button.style.background = '#4caf50';
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.style.background = '#667eea';
+                }, 2000);
+            });
+        }
+
+        function descargarHTML() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'NEOAPP-Guia-Ejecucion.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            // Mostrar confirmación
+            const indicator = document.getElementById('copyIndicator');
+            indicator.innerText = '✓ Archivo descargado';
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+                indicator.innerText = '✓ Copiado al portapapeles';
+            }, 2000);
+        }
+
+        // Smooth scroll para los links de navegación
+        document.querySelectorAll('a').forEach(link => {
+            if (link.href && link.href.includes('#')) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href').substring(1);
+                    mostrarSeccion(target);
+                });
+            }
+        });
+    </script>
+
+
+</body></html>
